@@ -78,7 +78,7 @@ export default class Index extends PureComponent {
                     {
                         images.map((image, i) => {
                             return (
-                                <Col key={`img_${i}`} md={3} sm={24} style={{ marginBottom: 16 }} >
+                                <Col key={`img_${i}`}  xs={12} sm={8}  md={6} xl={3} style={{ marginBottom: 16 }} >
                                     <a className={styles.imgWrap} onClick={() => { this.showModal(i) }}>
                                         <img src={image.src} />
                                     </a>

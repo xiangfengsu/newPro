@@ -67,6 +67,7 @@ export default class SearchForms extends React.PureComponent {
                     <FormItem
                         {...formItemLayout}
                         label={item.label}
+                        hasFeedback
                     >
                         {InputType}
                     </FormItem>
@@ -110,29 +111,33 @@ export default class SearchForms extends React.PureComponent {
         const { expandForm } = this.state;
         const buttonText = expandForm ? '收起' : '展开';
         return (
-            <Form
-                layout={layout}
-                onSubmit={this.handleSearch}
-            >
-                <Row gutter={{ md: 8, lg: 24, xl: 24 }}>{this.getFields()}</Row>
-                {
-                    expandForm ? (
-                        <div style={{ overflow: 'hidden' }}>
-                            <span style={{ float: 'right', marginBottom: 24 }}>
-                                <Button type="primary" htmlType="submit">查询</Button>
-                                <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
-                                {
-                                    formItems.length > 2 ? (
-                                        <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
-                                            {buttonText} <Icon type="up" />
-                                        </a>
-                                    ) : null
-                                }
-                            </span>
-                        </div>
-                    ) : null
-                }
-            </Form>
+            <div className={styles.searchForms}>
+                <Form
+                    layout={layout}
+                    onSubmit={this.handleSearch}
+                // hideRequiredMark={true}
+                >
+                    <Row gutter={{ md: 8, lg: 24, xl: 24 }}>{this.getFields()}</Row>
+                    {
+                        expandForm ? (
+                            <div style={{ overflow: 'hidden' }}>
+                                <span style={{ float: 'right', marginBottom: 24 }}>
+                                    <Button type="primary" htmlType="submit">查询</Button>
+                                    <Button style={{ marginLeft: 8 }} onClick={this.handleFormReset}>重置</Button>
+                                    {
+                                        formItems.length > 2 ? (
+                                            <a style={{ marginLeft: 8 }} onClick={this.toggleForm}>
+                                                {buttonText} <Icon type="up" />
+                                            </a>
+                                        ) : null
+                                    }
+                                </span>
+                            </div>
+                        ) : null
+                    }
+                </Form>
+            </div>
+
         );
     }
 }

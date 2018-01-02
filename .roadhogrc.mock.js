@@ -123,14 +123,17 @@ const proxy = {
     'GET /api/selectLists2': {
         status: 200,
         body: [{
-            key: 'test1',
-            value: 'test1'
+            text: '广告',
+            value: '广告'
         }, {
-            key: 'test2',
-            value: 'test2'
+            text: '网络',
+            value: '网络'
         }, {
-            key: 'test3',
-            value: 'test3'
+            text: '中介',
+            value: '中介'
+        }, {
+            text: '其他',
+            value: '其他'
         }],
         errorMessage: ''
     },

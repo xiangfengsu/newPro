@@ -28,6 +28,7 @@ export default class DetailFormInfo extends PureComponent {
                 <Col lg={item.colSpan || 8} md={12} sm={24} key={`${item.key}_${i}`} >
                     <FormItem
                         label={`${item.label}`}
+                        hasFeedback
                     >
                         {InputType}
                     </FormItem>

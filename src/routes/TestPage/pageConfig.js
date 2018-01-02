@@ -62,28 +62,15 @@ export const PageConfig = {
         popupContainer: 'scorllArea'
 
     }, {
-        formType: 'select',
+        formType: 'selectDynamic',
         disabled: false,
         isRequired: false,
         key: 'channeltype',
         label: '渠道类型',
         placeholder: '渠道类型',
-        dataType: 'static',
-        selectOptions: [{
-            text: '广告',
-            value: '广告'
-        }, {
-            text: '网络',
-            value: '网络'
-        }, {
-            text: '中介',
-            value: '中介'
-        }, {
-            text: '其他',
-            value: '其他'
-        }],
-        popupContainer: 'scorllArea'
-
+        dataType: 'dynamic',
+        dictionaryKey: 'selectLists2',
+        fetchUrl: '/api/selectLists2'
     }, {
         formType: 'select',
         disabled: false,
@@ -150,19 +137,7 @@ export const PageConfig = {
         }],
         popupContainer: 'scorllArea'
 
-    },
-        // {
-        //     formType: 'selectDynamic',
-        //     disabled: false,
-        //     isRequired: false,
-        //     key: 'test1',
-        //     label: '异步sele1',
-        //     placeholder: 'selectDynamic1',
-        //     dataType: 'dynamic',
-        //     dictionaryKey: 'selectLists2',
-        //     fetchUrl: '/api/selectLists2'
-
-        // },
+    }
     ],
     detailFormItems: [{
         formType: 'input',

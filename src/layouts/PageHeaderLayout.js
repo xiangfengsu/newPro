@@ -5,7 +5,7 @@ import PageHeader from '../components/PageHeader';
 import styles from './PageHeaderLayout.less';
 
 export default ({ children, wrapperClassName, top, ...restProps }) => (
-    <div style={{ margin: '-24px -24px 0' }} className={wrapperClassName}>
+    <div style={{ margin: '-24px -24px 0', position: 'relative' }} className={wrapperClassName} id="scorllArea">
         {top}
         <PageHeader {...restProps} linkElement={Link} />
         {children ? <div className={styles.content}>{children}</div> : null}

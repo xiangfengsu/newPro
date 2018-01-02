@@ -52,7 +52,7 @@ export default class DynamicSelect extends Component {
         return (
             <Select
                 value={state.selectValue}
-                placeholder={placeholder}
+                placeholder={`请输入${placeholder}`}
                 style={{ width: '100%' }}
                 onChange={this.handleCurrencyChange}
                 getPopupContainer={() => popupContainer}
@@ -60,7 +60,7 @@ export default class DynamicSelect extends Component {
                 {
                     dictionary[dictionaryKey] && dictionary[dictionaryKey].map((v, i) => {
                         return (
-                            <Option value={v.value} key={v.key}>
+                            <Option value={v.value} key={`${v.key}_${i}`}>
                                 {v.value}
                             </Option>
                         )

@@ -149,7 +149,7 @@ class BasicLayout extends React.PureComponent {
                         onNoticeVisibleChange={this.handleNoticeVisibleChange}
                     />
                     <Content style={{ padding: '24px 24px 0', height: contentHeight, overflowY: 'auto' }}>
-                        <div style={{ position: 'relative' }} id="scorllArea">
+                        <div  >
                             <Switch>
                                 {
                                     redirectData.map(item =>
