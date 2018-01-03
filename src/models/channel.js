@@ -1,5 +1,5 @@
 import { create, query, update, remove } from '../services/generalApi';
-
+import { message } from 'antd';
 export default {
     namespace: 'channel',
 
@@ -36,13 +36,13 @@ export default {
             });
             const response = yield call(update, payload, '/api/sys_channel');
             const { status = -1, body, errorMes = '' } = response;
-            if (status === 200) {
+            if (status >= 200 && status < 300) {
                 yield put({
                     type: 'updateSuccess',
                     payload,
                 });
             } else {
-                throw new Error('修改失败')
+                throw errorMes
             }
             yield put({
                 type: 'changeLoading',
@@ -56,10 +56,15 @@ export default {
             });
             const response = yield call(create, payload, '/api/sys_channel');
             const { status = -1, body, errorMes = '' } = response;
-            yield put({
-                type: 'save',
-                payload: body,
-            });
+            if (status >= 200 && status < 300) {
+                yield put({
+                    type: 'save',
+                    payload: body,
+                });
+            } else {
+                throw errorMes
+            }
+
             yield put({
                 type: 'changeLoading',
                 payload: false,
@@ -74,13 +79,15 @@ export default {
             });
             const response = yield call(remove, payload, '/api/sys_channel');
             const { status = -1, body, errorMes = '' } = response;
-            if (status === 200) {
+            if (status >= 200 && status < 300) {
+                message.success(status)
                 yield put({
                     type: 'deleteSuccess',
                     payload,
                 });
+
             } else {
-                throw new Error('修改失败')
+                throw errorMes;
             }
             yield put({
                 type: 'changeLoading',

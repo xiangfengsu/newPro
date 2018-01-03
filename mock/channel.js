@@ -157,8 +157,9 @@ module.exports = {
             total: tableListSys_channelsData.page.total
         };
         global.tableListSys_channelsData = tableListSys_channelsData;
+        res.status(201);
         res.json({
-            status: 200,
+            status: 201,
             body: {
                 list: data,
                 pagination: newPage
@@ -179,8 +180,9 @@ module.exports = {
         tableListSys_channelsData.page.total = tableListSys_channelsData.data.length;
 
         global.tableListSys_channelsData = tableListSys_channelsData;
+        // res.status(204)
         res.json({
-            status: 200,
+            status: 204,
             body: {},
             errorMes: ''
         });
@@ -206,9 +208,9 @@ module.exports = {
         });
 
         global.tableListSys_channelsData = tableListSys_channelsData;
-
+        res.status(202)
         res.json({
-            status: 200,
+            status: 202,
             body: editItem,
             errorMes: ''
 

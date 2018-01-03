@@ -43,7 +43,8 @@ export default class Index extends PureComponent {
             },
             handleSearchSubmit: (formValues) => {
                 const params = Object.assign(formValues, {
-                    createtime: formValues['createtime'] ? formValues['createtime'].format('YYYY-MM-DD') : ''
+                    createtime: formValues['createtime'] ? formValues['createtime'].format('YYYY-MM-DD') : '',
+                    channeltype: formValues['channeltype']['selectValue']
                 });
                 const payload = formaterObjectValue(params);
                 this.setState({

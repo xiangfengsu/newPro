@@ -3,7 +3,8 @@ import { Layout, Menu, Icon } from 'antd';
 import { Link } from 'dva/router';
 import logo from '../../assets/logo.svg';
 import styles from './index.less';
-import { getMenuData } from '../../common/menu';
+// import { getMenuData } from '../../common/menu';
+// import { formatter } from '../../utils/utils';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -11,7 +12,7 @@ const { SubMenu } = Menu;
 export default class SiderMenu extends PureComponent {
     constructor(props) {
         super(props);
-        this.menus = getMenuData();
+        // menuData = getMenuData();
         this.state = {
             openKeys: this.getDefaultCollapsedSubMenus(props),
         };
@@ -52,7 +53,8 @@ export default class SiderMenu extends PureComponent {
         return keys;
     }
     getSelectedMenuKeys = (path) => {
-        const flatMenuKeys = this.getFlatMenuKeys(this.menus);
+        const { menuData } = this.props;
+        const flatMenuKeys = this.getFlatMenuKeys(menuData);
         if (flatMenuKeys.indexOf(path.replace(/^\//, '')) > -1) {
             return [path.replace(/^\//, '')];
         }
@@ -122,8 +124,9 @@ export default class SiderMenu extends PureComponent {
         });
     }
     handleOpenChange = (openKeys) => {
+        const { menuData } = this.props;
         const lastOpenKey = openKeys[openKeys.length - 1];
-        const isMainMenu = this.menus.some(
+        const isMainMenu = menuData.some(
             item => lastOpenKey && (item.key === lastOpenKey || item.path === lastOpenKey)
         );
         this.setState({
@@ -131,7 +134,7 @@ export default class SiderMenu extends PureComponent {
         });
     }
     render() {
-        const { collapsed, location: { pathname }, onCollapse } = this.props;
+        const { collapsed, location: { pathname }, onCollapse, menuData } = this.props;
         const { openKeys } = this.state;
         // Don't show popup menu when it is been collapsed
         const menuProps = collapsed ? {} : {
@@ -166,7 +169,7 @@ export default class SiderMenu extends PureComponent {
                     selectedKeys={selectedKeys}
                     style={{ padding: '16px 0', width: '100%' }}
                 >
-                    {this.getNavMenuItems(this.menus)}
+                    {this.getNavMenuItems(menuData)}
                 </Menu>
             </Sider>
         );

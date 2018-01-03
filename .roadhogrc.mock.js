@@ -7,6 +7,7 @@ import { getProfileBasicData } from './mock/profile';
 import { getProfileAdvancedData } from './mock/profile';
 import { getNotices } from './mock/notices';
 import { format, delay } from 'roadhog-api-doc';
+import { menuData } from './src/common/menu';
 
 // 是否禁用代理
 const noProxy = process.env.NO_PROXY === 'true';
@@ -27,6 +28,7 @@ const proxy = {
             avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
             userid: '00000001',
             notifyCount: 12,
+            menuData: menuData
         },
     },
     // GET POST 可省略
@@ -71,8 +73,35 @@ const proxy = {
     'POST /api/login/account': (req, res) => {
         const { password, userName, type } = req.body;
         res.send({
-            status: password === '888888' && userName === 'admin' ? 'ok' : 'error',
-            type,
+            status: 200,
+            body: {
+                menuData: [{
+                    name: 'dashboard',
+                    icon: 'dashboard',
+                    path: 'dashboard',
+                    children: [{
+                        name: '分析页',
+                        path: 'analysis',
+                    }, {
+                        name: '监控页',
+                        path: 'monitor',
+                    }, {
+                        name: '工作台',
+                        path: 'workplace',
+                        // hideInMenu: true,
+                    }],
+                }, {
+                    name: '通用查询页',
+                    icon: 'search',
+                    path: 'generaltable',
+                    children: [{
+                        name: '渠道管理',
+                        path: 'channel'
+                    }]
+
+                },]
+            },
+            errorMes: ''
         });
     },
     'POST /api/register': (req, res) => {

@@ -67,7 +67,7 @@ export default class SearchForms extends React.PureComponent {
                     <FormItem
                         {...formItemLayout}
                         label={item.label}
-                        hasFeedback
+                    // hasFeedback
                     >
                         {InputType}
                     </FormItem>

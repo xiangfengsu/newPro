@@ -1,4 +1,4 @@
-const menuData = [{
+export const menuData = [{
     name: 'dashboard',
     icon: 'dashboard',
     path: 'dashboard',
@@ -124,3 +124,4 @@ function formatter(data, parentPath = '') {
 }
 
 export const getMenuData = () => formatter(menuData);
+

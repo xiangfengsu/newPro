@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Route } from 'dva/router';
+import { Link, Route, Redirect } from 'dva/router';
 import DocumentTitle from 'react-document-title';
 import { Icon } from 'antd';
 import styles from './UserLayout.less';
@@ -24,9 +24,7 @@ class UserLayout extends React.PureComponent {
                 <div className={styles.container}>
                     <div className={styles.top}>
                         <div className={styles.header}>
-                            <Link to="/">
-                                <span className={styles.title}>瑞博恩债权业务系统</span>
-                            </Link>
+                            <span className={styles.title}>瑞博恩债权业务系统</span>
                         </div>
                     </div>
                     {
@@ -40,7 +38,9 @@ class UserLayout extends React.PureComponent {
                                 />
                             )
                         )
+
                     }
+                    {/* <Redirect exact from="/user" to="/user/login" /> */}
                 </div>
             </DocumentTitle>
         );

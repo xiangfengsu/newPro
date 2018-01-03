@@ -11,28 +11,15 @@ import GlobalHeader from '../components/GlobalHeader';
 import GlobalFooter from '../components/GlobalFooter';
 import SiderMenu from '../components/SiderMenu';
 import NotFound from '../routes/Exception/404';
-import { getRoutes } from '../utils/utils';
+import { getRoutes, formatter } from '../utils/utils';
 import { getMenuData } from '../common/menu';
 import logo from '../assets/logo.svg';
 
 /**
  * 根据菜单取得重定向地址.
  */
-const redirectData = [];
-const getRedirect = (item) => {
-    if (item && item.children) {
-        if (item.children[0] && item.children[0].path) {
-            redirectData.push({
-                from: `/${item.path}`,
-                to: `/${item.children[0].path}`,
-            });
-            item.children.forEach((children) => {
-                getRedirect(children);
-            });
-        }
-    }
-};
-getMenuData().forEach(getRedirect);
+
+
 
 const { Content } = Layout;
 const query = {
@@ -67,7 +54,7 @@ class BasicLayout extends React.PureComponent {
         breadcrumbNameMap: PropTypes.object,
     }
     state = {
-        isMobile,
+        isMobile
     };
     getChildContext() {
         const { location, routerData } = this.props;
@@ -122,11 +109,33 @@ class BasicLayout extends React.PureComponent {
             });
         }
     }
+    getRedirectData = () => {
+        const { currentUser } = this.props;
+        const redirectData = [];
+        const getRedirect = (item) => {
+            if (item && item.children) {
+                if (item.children[0] && item.children[0].path) {
+                    redirectData.push({
+                        from: `/${item.path}`,
+                        to: `/${item.children[0].path}`,
+                    });
+                    item.children.forEach((children) => {
+                        getRedirect(children);
+                    });
+                }
+            }
+        };
+        formatter(currentUser['menuData']).forEach(getRedirect);
+        return redirectData;
+
+    }
     render() {
         const {
-      currentUser, collapsed, fetchingNotices, notices, routerData, match, location,
-    } = this.props;
+                currentUser, collapsed, fetchingNotices, notices, routerData, match, location
+            } = this.props;
+
         const contentHeight = document.documentElement.clientHeight - 64;
+        // logs('this.getRedirectData()', this.getRedirectData());
         const layout = (
             <Layout>
                 <SiderMenu
@@ -134,6 +143,7 @@ class BasicLayout extends React.PureComponent {
                     location={location}
                     isMobile={this.state.isMobile}
                     onCollapse={this.handleMenuCollapse}
+                    menuData={formatter(currentUser['menuData'])}
                 />
                 <Layout>
                     <GlobalHeader
@@ -152,7 +162,7 @@ class BasicLayout extends React.PureComponent {
                         <div  >
                             <Switch>
                                 {
-                                    redirectData.map(item =>
+                                    this.getRedirectData().map(item =>
                                         <Redirect key={item.from} exact from={item.from} to={item.to} />
                                     )
                                 }
@@ -197,4 +207,5 @@ export default connect(state => ({
     collapsed: state.global.collapsed,
     fetchingNotices: state.global.fetchingNotices,
     notices: state.global.notices,
+
 }))(BasicLayout);

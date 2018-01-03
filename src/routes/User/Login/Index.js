@@ -38,14 +38,16 @@ export default class Login extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFields({ force: true },
+        const { form: { validateFields }, dispatch, location } = this.props;
+        validateFields({ force: true },
             (err, values) => {
                 if (!err) {
-                    this.props.dispatch({
+                    const { from } = location.state || { from: { pathname: '/' } }
+                    dispatch({
                         type: 'login/login',
                         payload: {
                             ...values,
-                            type: this.state.type,
+                            from
                         },
                     });
                 }
