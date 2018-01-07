@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { fakeAccountLogin } from '../services/api';
-import { getCookie, setCookie } from '../utils/cookie';
+import { getCookie, setCookie, delCookie } from '../utils/cookie';
 import { encodeHandle, decodeHandle } from '../utils/base64';
 import storage from '../utils/storage.js';
 export default {
@@ -44,6 +44,7 @@ export default {
                     status: false,
                 },
             });
+            delCookie(encodeHandle('name'));
             yield put(routerRedux.push('/user/login'));
         },
     },

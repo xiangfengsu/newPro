@@ -143,6 +143,7 @@ export default class Index extends PureComponent {
     modalOkHandle = () => {
         this.modalForm.validateFields((err, fieldsValue) => {
             if (err) return;
+            logs('fieldsValue', fieldsValue);
             const { showModalType, currentItem } = this.state;
             if (showModalType === 'create') {
                 this.props.dispatch({

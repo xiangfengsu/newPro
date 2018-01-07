@@ -253,7 +253,17 @@ export const PageConfig = {
         label: '备注',
         placeholder: '备注',
         autosize: { minRows: 5, maxRows: 10 },
-        colSpan: 24
+        colSpan: 12
+    },
+    {
+        formType: 'upload',
+        disabled: false,
+        isRequired: true,
+        key: 'uploadImg',
+        label: '上传图片',
+        placeholder: '上传图片',
+        maxLength: 2,
+        colSpan: 12
     },
         // {
         //     formType: 'selectDynamic',

@@ -1,4 +1,4 @@
-import { Form, Row, Input, InputNumber, Switch, Tooltip, Button, Select, Col, TimePicker, Upload, Icon, DatePicker } from 'antd';
+import { Form, Row, Input, InputNumber, Switch, Tooltip, Button, Select, Col, TimePicker, Upload, Icon, DatePicker, } from 'antd';
 
 const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;
@@ -190,6 +190,18 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
                     style={{ width: '100%' }}
                     getCalendarContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
                 />
+                )
+            break;
+        case 'upload':
+            const UploadImg = require('../components/UploadImg/Index');
+            InputType = getFieldDecorator(item.key, {
+                initialValue: item.initialValue || [],
+                rules: [{
+                    required: item.isRequired,
+                    message: item.errorText
+                }]
+            })(
+                <UploadImg />
                 )
             break;
     }
