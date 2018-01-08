@@ -23,6 +23,7 @@ export default class UploadImg extends Component {
   }
 
   handleChange = ({ fileList }) => {
+    logs('@@@@@', fileList);
     if (!('value' in this.props)) {
       this.setState({ fileList });
     }

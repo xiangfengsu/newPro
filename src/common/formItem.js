@@ -195,10 +195,10 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
     case 'upload':
       const UploadImg = require('../components/UploadImg/Index');
       InputType = getFieldDecorator(item.key, {
-        initialValue: item.initialValue || [],
+        initialValue: item.initialValue,
         rules: [{
           required: item.isRequired,
-          message: item.errorText
+          message: `${item.label}不能为空`
         }]
       })(
         <UploadImg action={item.action} />
