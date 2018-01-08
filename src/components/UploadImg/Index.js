@@ -46,7 +46,7 @@ export default class UploadImg extends Component {
   }
   render() {
     const { previewVisible, previewImage, fileList } = this.state;
-    const { action } = this.props;
+    const { action, maxLength } = this.props;
     const uploadButton = (
       <div>
         <Icon type="plus" />
@@ -64,7 +64,7 @@ export default class UploadImg extends Component {
           onPreview={this.handlePreview}
           onChange={this.handleChange}
         >
-          {fileList.length >= 5 ? null : uploadButton}
+          {fileList.length >= maxLength ? null : uploadButton}
         </Upload>
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
           <img alt="example" style={{ width: '100%' }} src={previewImage} />

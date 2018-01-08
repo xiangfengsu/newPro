@@ -201,7 +201,7 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
           message: `${item.label}不能为空`
         }]
       })(
-        <UploadImg action={item.action} />
+        <UploadImg action={item.action} maxLength={item.maxLength} />
         )
       break;
   }
