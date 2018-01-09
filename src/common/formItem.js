@@ -201,7 +201,14 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
           message: `${item.label}不能为空`
         }]
       })(
-        <UploadImg action={item.action} maxLength={item.maxLength} />
+        <UploadImg
+          action={item.action}
+          maxLength={item.maxLength}
+          multiple={item.multiple}
+          acceptType={item.acceptType}
+          maxFileSize={item.maxFileSize}
+          listType={item.listType}
+        />
         )
       break;
   }
