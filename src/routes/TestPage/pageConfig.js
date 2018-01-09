@@ -262,7 +262,7 @@ export const PageConfig = {
     key: 'uploadImg',
     label: '上传图片',
     placeholder: '上传图片',
-    action: 'http://localhost:1337/127.0.0.1:7001/form',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
     multiple: true,
     acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
     listType: 'picture-card', // 1:text  2:picture 3:picture-card
