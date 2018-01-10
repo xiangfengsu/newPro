@@ -246,6 +246,18 @@ export const PageConfig = {
 
   },
   {
+    formType: 'inputMoney',
+    disabled: false,
+    isRequired: false,
+    pattern: /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/,
+    maxLen: 100000,
+    errorText: '请输入合法金额数字',
+    key: 'money',
+    label: 'money',
+    placeholder: 'money',
+    colSpan: 8
+  },
+  {
     formType: 'textArea',
     disabled: false,
     isRequired: true,
@@ -253,7 +265,7 @@ export const PageConfig = {
     label: '备注',
     placeholder: '备注',
     autosize: { minRows: 5, maxRows: 10 },
-    colSpan: 12
+    colSpan: 24
   },
   {
     formType: 'upload',
@@ -268,8 +280,9 @@ export const PageConfig = {
     listType: 'picture-card', // 1:text  2:picture 3:picture-card
     maxFileSize: 1,// 单位是M
     maxLength: 10,
-    colSpan: 12
+    colSpan: 24
   },
+
     // {
     //     formType: 'selectDynamic',
     //     disabled: false,

@@ -20,11 +20,11 @@ export default class UploadImg extends Component {
   handlePreview = (file) => {
     logs('currFile', file);
     if (file.status !== 'done') {
-      message.error(`该文件无法预览`);
+      message.error(`该文件上传失败，无法预览`);
       return
     }
     if (!/^image\/(gif|png|jpe?g)$/.test(file.type)) {
-      message.error(`该文件无法预览`);
+      message.error(`该文件不是图片类型，无法预览`);
       return
     }
     const { fileList } = this.state;
