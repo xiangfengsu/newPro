@@ -23,6 +23,10 @@ export default class UploadImg extends Component {
       message.error(`该文件无法预览`);
       return
     }
+    if (!/^image\/(gif|png|jpe?g)$/.test(file.type)) {
+      message.error(`该文件无法预览`);
+      return
+    }
     const { fileList } = this.state;
     const carouserImages = fileList.filter(file => {
       return file.status === 'done' && /^image\/(gif|png|jpe?g)$/.test(file.type)
