@@ -3,16 +3,18 @@ import { connect } from 'dva';
 import { Form, Row, Col, Card, Modal, Button, Input, Popconfirm } from 'antd';
 import styles from './Index.less';
 
-import PageHeaderLayout from '../../layouts/PageHeaderLayout';
-import SearchForms from '../../components/GeneralSearchForm/Index';
-import TableList from '../../components/GeneralTableList/Index';
-import DetailFormInfo from './ModalDetailForm/Index';
+import { Link } from 'dva/router';
+
+import PageHeaderLayout from '../../../layouts/PageHeaderLayout';
+import SearchForms from '../../../components/GeneralSearchForm/Index';
+import TableList from '../../../components/GeneralTableList/Index';
+// import DetailFormInfo from './ModalDetailForm/Index';
 
 import { PageConfig } from './pageConfig.js';
-import { formaterObjectValue, formItemAddInitValue } from '../../utils/utils';
+import { formaterObjectValue, formItemAddInitValue } from '../../../utils/utils';
 const FormItem = Form.Item;
 @connect(state => ({
-  channel: state.channel,
+  assessmentReview: state.assessmentReview,
 }))
 @Form.create()
 export default class Index extends PureComponent {
@@ -29,7 +31,7 @@ export default class Index extends PureComponent {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'channel/fetch',
+      type: 'assessmentReview/fetch',
     });
   }
   renderSearchForm = () => {
@@ -42,25 +44,26 @@ export default class Index extends PureComponent {
         formItems: searchForms
       },
       handleSearchSubmit: (formValues) => {
-        const params = Object.assign(formValues, {
-          createtime: formValues['createtime'] ? formValues['createtime'].format('YYYY-MM-DD') : '',
-          channeltype: formValues['channeltype']['selectValue']
-        });
-        const payload = formaterObjectValue(params);
-        this.setState({
-          formValues: payload
-        });
-        dispatch({
-          type: 'channel/fetch',
-          payload
-        });
+        logs('formValues', formValues);
+        // const params = Object.assign(formValues, {
+        //   createtime: formValues['createtime'] ? formValues['createtime'].format('YYYY-MM-DD') : '',
+        //   channeltype: formValues['channeltype']['selectValue']
+        // });
+        // const payload = formaterObjectValue(params);
+        // this.setState({
+        //   formValues: payload
+        // });
+        // dispatch({
+        //   type: 'assessmentReview/fetch',
+        //   payload
+        // });
       },
       handleFormReset: () => {
         this.setState({
           formValues: {}
         });
         dispatch({
-          type: 'channel/fetch',
+          type: 'assessmentReview/fetch',
           payload: {}
         });
       }
@@ -72,7 +75,6 @@ export default class Index extends PureComponent {
   showModalVisibel = (type, record) => {
     const { detailFormItems } = this.state;
     const newDetailFormItems = formItemAddInitValue(detailFormItems, record);
-    console.log(newDetailFormItems);
     this.setState({
       showModalType: type,
       modalVisible: true,
@@ -98,15 +100,11 @@ export default class Index extends PureComponent {
         title: '操作',
         render: (text, record) => (
           <div>
-            <a onClick={() => { this.showModalVisibel('update', record) }}>编辑</a>
-            &nbsp;
-                        <Popconfirm
-              title="确定删除吗？"
-              onConfirm={() => { this.deleteTableRowHandle(record.id) }}
-              getPopupContainer={() => document.getElementById('scorllArea')}
-            >
-              <a>删除</a>
-            </Popconfirm>
+            {/* <a onClick={() => { this.showModalVisibel('update', record) }}>去处理</a>
+           */}
+            <Link to="/profile/advanced" >
+              去处理
+              </Link>
           </div>
         ),
       }
@@ -115,7 +113,7 @@ export default class Index extends PureComponent {
   }
   renderTable = () => {
     const { tableColumns } = PageConfig;
-    const { data: { list, pagination }, loading } = this.props.channel;
+    const { data: { list, pagination }, loading } = this.props.assessmentReview;
     const newTableColumns = [...tableColumns, ...this.extraTableColumnRender()];
     const tableProps = {
       dataSource: list,
@@ -131,7 +129,7 @@ export default class Index extends PureComponent {
           ...formValues,
         };
         dispatch({
-          type: 'channel/fetch',
+          type: 'assessmentReview/fetch',
           payload
         });
 
@@ -148,12 +146,12 @@ export default class Index extends PureComponent {
       const { showModalType, currentItem } = this.state;
       if (showModalType === 'create') {
         this.props.dispatch({
-          type: 'channel/add',
+          type: 'assessmentReview/add',
           payload: fieldsValue
         });
       } else if (showModalType === 'update') {
         this.props.dispatch({
-          type: 'channel/update',
+          type: 'assessmentReview/update',
           payload: Object.assign(currentItem, fieldsValue)
         });
       }
@@ -171,28 +169,10 @@ export default class Index extends PureComponent {
           <div className={styles.tableList}>
             <div className={styles.tableListForm}>
               {this.renderSearchForm()}
-              <div className={styles.tableListOperator}>
-                <Button icon="plus" type="primary" onClick={() => this.showModalVisibel('create', {})}>
-                  新建
-                                </Button>
-              </div>
               {this.renderTable()}
             </div>
           </div>
         </Card>
-        <Modal
-          width={modalWidth}
-          destroyOnClose={true}
-          visible={modalVisible}
-          onCancel={() => this.hideModalVisibel()}
-          onOk={() => { this.modalOkHandle() }}
-
-        >
-          <DetailFormInfo
-            ref={ref => { this.modalForm = ref }}
-            formItems={detailFormItems}
-          />
-        </Modal>
       </PageHeaderLayout>
     );
   }

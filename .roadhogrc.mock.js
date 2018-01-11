@@ -180,13 +180,13 @@ const proxy = {
     }],
     errorMessage: ''
   },
-  'POST /api/uploadImg':(req, res) =>{
+  'POST /api/uploadImg': (req, res) => {
     res.send({
-     url:'http://picture.51auto.com/car/201801/09/1515458467175457-mid.jpg'
+      url: 'http://picture.51auto.com/car/201801/09/1515458467175457-mid.jpg'
     });
   }
 };
-const mockFileLists = ['channel.js'];
+const mockFileLists = ['channel.js', 'assessmentReview.js'];
 require('fs').readdirSync(require('path').join(__dirname + '/mock')).forEach(function (file) {
   if (mockFileLists.indexOf(file) !== -1) {
     Object.assign(proxy, require('./mock/' + file))

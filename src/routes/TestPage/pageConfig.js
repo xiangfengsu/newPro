@@ -22,7 +22,14 @@ export const PageConfig = {
     dataIndex: 'city'
   }, {
     title: '渠道性质',
-    dataIndex: 'channelnature'
+    dataIndex: 'channelnature',
+    render: (text, record, index) => {
+      if (text == 0) {
+        return '直营';
+      } else {
+        return '非直营';
+      }
+    }
   }, {
     title: '状态',
     dataIndex: 'status',
@@ -104,10 +111,10 @@ export const PageConfig = {
     dataType: 'static',
     selectOptions: [{
       text: '直营',
-      value: '直营'
+      value: 0
     }, {
       text: '非直营',
-      value: '非直营'
+      value: 1
     }],
     popupContainer: 'scorllArea'
 
@@ -220,10 +227,10 @@ export const PageConfig = {
     dataType: 'static',
     selectOptions: [{
       text: '直营',
-      value: '直营'
+      value: 0
     }, {
       text: '非直营',
-      value: '非直营'
+      value: 1
     }],
     colSpan: 8
 
@@ -297,3 +304,123 @@ export const PageConfig = {
     // },
   ],
 };
+// export const FormItems = [{
+//   title: '申请类',
+//   items: [{
+//     formType: 'upload',
+//     disabled: false,
+//     isRequired: false,
+//     key: 'car1001',
+//     label: '借款人身份证正面',
+//     placeholder: '借款人身份证正面',
+// action: 'http://localhost:1337/192.168.3.15:7001/form',
+// multiple: true,
+// acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+// listType: 'picture-card', // 1:text  2:picture 3:picture-card
+// maxFileSize: 1,// 单位是M
+// maxLength: 10,
+// colSpan: 24
+//   }],
+// }];
+export const FormItems = [{
+  title: '申请类',
+  items: [{
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1001',
+    label: '借款人身份证正面',
+    placeholder: '借款人身份证正面',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }, {
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1002',
+    label: '借款人身份证背面',
+    placeholder: '借款人身份证背面',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }, {
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1003',
+    label: '借款人手持身份证照片',
+    placeholder: '借款人手持身份证照片',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }, {
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1004',
+    label: '借款申请表',
+    placeholder: '借款申请表',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }, {
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1005',
+    label: '人行征信查询授权书',
+    placeholder: '人行征信查询授权书',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }, {
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1006',
+    label: '借款人手持申请表和征信查询授权书',
+    placeholder: '借款人手持申请表和征信查询授权书',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }, {
+    formType: 'upload',
+    disabled: false,
+    isRequired: false,
+    key: 'car1007',
+    label: '配偶提供证件照（如有）',
+    placeholder: '配偶提供证件照（如有）',
+    action: 'http://localhost:1337/192.168.3.15:7001/form',
+    multiple: true,
+    acceptType: '*', //.jpg,.png,.pdf,.mp4,.gif,.word
+    listType: 'picture-card', // 1:text  2:picture 3:picture-card
+    maxFileSize: 1,// 单位是M
+    maxLength: 10,
+    colSpan: 24
+  }],
+}];

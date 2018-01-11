@@ -21,19 +21,15 @@ function getNowFormatDate() {
 const uniqueFileds = [];
 let helper = {};
 // 数据持久
-let tableListSys_channelsData = {};
-if (!global.tableListSys_channelsData) {
+let tableListSys_assessmentReviewData = {};
+if (!global.tableListSys_assessmentReviewData) {
   const data = mockjs.mock({
     'data|50': [{
       'id|+1': 1,
-      'ordernum|+1': 1,
-      'channelname|1': '@cword(4)',
-      'cooperationstatus|1': ['直营', '小商户'],
-      'channeltype|1': ['广告', '网络', '中介', '其他'],
-      'channelsource|1': ['官网', '百度', '400介绍', '老客户'],
-      'city|1': '@city()',
-      'channelnature|1': [0, 1],//['直营0', '非直营1']
-      'status|1': [0, 1],
+      'ordernum|+1': 1001,
+      'assessmentname|1': '@cname()',
+      'assessmentprice|60000-150000': 70000,
+      'status|1': ['已评估', '已检测', '未评估'],
       'createtime|1': '@datetime("2017-12-dd")',
       'description|1': '@csentence'
 
@@ -44,13 +40,13 @@ if (!global.tableListSys_channelsData) {
       current: 1
     }
   });
-  tableListSys_channelsData = data;
-  global.tableListSys_channelsData = tableListSys_channelsData;
+  tableListSys_assessmentReviewData = data;
+  global.tableListSys_assessmentReviewData = tableListSys_assessmentReviewData;
 } else {
-  tableListSys_channelsData = global.tableListSys_channelsData;
+  tableListSys_assessmentReviewData = global.tableListSys_assessmentReviewData;
 }
 module.exports = {
-  'GET /api/sys_channel'(req, res) {
+  'GET /api/sys_assessmentReview'(req, res) {
     const page = qs.parse(req.query);
     const pageSize = page.pageSize - 0 || 10;
     const currentPage = page.page - 0 || 1;
@@ -67,7 +63,7 @@ module.exports = {
         queryValue = page[uniqueFileds[1]];
       }
       let queryData = jsonQuery(`data[${queryKey}=${queryValue}]`, {
-        data: tableListSys_channelsData
+        data: tableListSys_assessmentReviewData
       }).value;
       let resultArray = [];
       if (queryData) {
@@ -109,7 +105,7 @@ module.exports = {
       if (keys.length > 0) {
         const queryKeys = keys.join('&');
         let queryData = jsonQuery(`data[${queryKeys}]`, {
-          data: tableListSys_channelsData,
+          data: tableListSys_assessmentReviewData,
           locals: helper
         }).value;
         data = queryData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -118,11 +114,11 @@ module.exports = {
           total: queryData.length
         };
       } else {
-        data = tableListSys_channelsData.data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-        tableListSys_channelsData.page.current = currentPage * 1;
+        data = tableListSys_assessmentReviewData.data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+        tableListSys_assessmentReviewData.page.current = currentPage * 1;
         newPage = {
-          current: tableListSys_channelsData.page.current,
-          total: tableListSys_channelsData.page.total
+          current: tableListSys_assessmentReviewData.page.current,
+          total: tableListSys_assessmentReviewData.page.total
         };
         // console.log('newPage',newPage)
       }
@@ -138,25 +134,25 @@ module.exports = {
     });
 
   },
-  'POST /api/sys_channel'(req, res) {
+  'POST /api/sys_assessmentReview'(req, res) {
     const newData = qs.parse(req.body);
     const pageSize = 10;
     const currentPage = 1;
     let data;
     let newPage;
-    newData.id = tableListSys_channelsData.data.length + 1;
+    newData.id = tableListSys_assessmentReviewData.data.length + 1;
     newData.createtime = mockjs.mock('@datetime("2017-12-dd")');
     newData.city = mockjs.mock('@city()');
-    tableListSys_channelsData.data.unshift(newData);
+    tableListSys_assessmentReviewData.data.unshift(newData);
 
-    data = tableListSys_channelsData.data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
-    tableListSys_channelsData.page.current = 1;
-    tableListSys_channelsData.page.total = tableListSys_channelsData.data.length;
+    data = tableListSys_assessmentReviewData.data.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    tableListSys_assessmentReviewData.page.current = 1;
+    tableListSys_assessmentReviewData.page.total = tableListSys_assessmentReviewData.data.length;
     newPage = {
       current: 1,
-      total: tableListSys_channelsData.page.total
+      total: tableListSys_assessmentReviewData.page.total
     };
-    global.tableListSys_channelsData = tableListSys_channelsData;
+    global.tableListSys_assessmentReviewData = tableListSys_assessmentReviewData;
     res.status(201);
     res.json({
       status: 201,
@@ -167,19 +163,19 @@ module.exports = {
       errorMes: ''
     });
   },
-  'DELETE /api/sys_channel'(req, res) {
+  'DELETE /api/sys_assessmentReview'(req, res) {
     const deleteItem = qs.parse(req.body);
     console.log('deleteItem', deleteItem);
-    tableListSys_channelsData.data = tableListSys_channelsData.data.filter(function (item) {
+    tableListSys_assessmentReviewData.data = tableListSys_assessmentReviewData.data.filter(function (item) {
       if (item.id == deleteItem.id) {
         return false;
       }
       return true;
     });
 
-    tableListSys_channelsData.page.total = tableListSys_channelsData.data.length;
+    tableListSys_assessmentReviewData.page.total = tableListSys_assessmentReviewData.data.length;
 
-    global.tableListSys_channelsData = tableListSys_channelsData;
+    global.tableListSys_assessmentReviewData = tableListSys_assessmentReviewData;
     // res.status(204)
     res.json({
       status: 204,
@@ -187,7 +183,7 @@ module.exports = {
       errorMes: ''
     });
   },
-  'PUT /api/sys_channel'(req, res) {
+  'PUT /api/sys_assessmentReview'(req, res) {
     // res.status(403).send({
     //     "timestamp": new Date().getTime(),
     //     "status": 403,
@@ -197,7 +193,7 @@ module.exports = {
     // });
     const editItem = qs.parse(req.body);
     console.log('editItem', editItem)
-    tableListSys_channelsData.data = tableListSys_channelsData.data.map(function (item) {
+    tableListSys_assessmentReviewData.data = tableListSys_assessmentReviewData.data.map(function (item) {
       if (item.id == editItem.id) {
         return {
           ...item,
@@ -207,7 +203,7 @@ module.exports = {
       return item;
     });
 
-    global.tableListSys_channelsData = tableListSys_channelsData;
+    global.tableListSys_assessmentReviewData = tableListSys_assessmentReviewData;
     res.status(202)
     res.json({
       status: 202,

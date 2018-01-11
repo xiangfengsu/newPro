@@ -13,15 +13,15 @@ export default class Index extends PureComponent {
     })).isRequired
   }
   static defaultProps = {
-    images: [{ src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1453550486481-aa4175b013ea?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' },
-    { src: 'https://images.unsplash.com/photo-1471127432458-65206be149c9?dpr=2&auto=format&crop=faces&fit=crop&w=240&h=159' }
+    images: [{ src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782621405.jpg', name: '车架号' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782574909.jpg', name: '发动机舱' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782529640.jpg', name: '铭牌' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782501665.jpg', name: '右A柱与右B柱' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782470766.jpg', name: '右 C 柱' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782452711.jpg', name: '右后 45 度' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782420819.jpg', name: '后备箱' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782410009.jpg', name: '后备箱底板' },
+    { src: 'https://ssl-img.che300.com/inception_img/PHOTO_1502782205406.jpg', name: '中控台' }
     ]
   }
   state = {
@@ -45,11 +45,11 @@ export default class Index extends PureComponent {
     const { modalVisible, currentIndex } = this.state;
     return (
       <div className={styles.lightBoxWrap}>
-        <Row gutter={2}>
+        <Row gutter={10}>
           {
             images.map((image, i) => {
               return (
-                <Col key={`img_${i}`} xs={12} sm={8} md={6} xl={3} style={{ marginBottom: 16 }} >
+                <Col key={`img_${i}`} xs={12} sm={8} md={6} xl={4} style={{ marginBottom: 16 }} >
                   <div className={styles.imgWrap} onClick={() => { this.showModal(i) }}>
                     <div className={styles.imgBox}>
                       <img src={image.src} />
@@ -57,7 +57,11 @@ export default class Index extends PureComponent {
                         <Icon type="eye-o" style={{ color: "rgba(255, 255, 255, 0.85)", fontSize: 16 }} />
                       </span>
                     </div>
-
+                    <div style={{ marginTop: 8 }}>
+                      {
+                        image.name
+                      }
+                    </div>
                   </div>
                 </Col>
               )
