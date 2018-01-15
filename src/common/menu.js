@@ -1,28 +1,36 @@
 export const menuData = [{
+  name: '表单类型',
+  icon: 'book',
+  path: 'formItemType',
+}, {
   name: '评估管理',
   icon: 'book',
   path: 'assessment',
   children: [{
     name: '评估复核管理',
     path: 'assessment-review',
+  }, {
+    name: '评估复核详情页',
+    path: 'assessment-detail/:id',
+    hideInMenu: true
   }],
 },
-// {
-//   name: 'dashboard',
-//   icon: 'dashboard',
-//   path: 'dashboard',
-//   children: [{
-//     name: '分析页',
-//     path: 'analysis',
-//   }, {
-//     name: '监控页',
-//     path: 'monitor',
-//   }, {
-//     name: '工作台',
-//     path: 'workplace',
-//     // hideInMenu: true,
-//   }],
-// }, 
+{
+  name: 'dashboard',
+  icon: 'dashboard',
+  path: 'dashboard',
+  children: [{
+    name: '分析页',
+    path: 'analysis',
+  }, {
+    name: '监控页',
+    path: 'monitor',
+  }, {
+    name: '工作台',
+    path: 'workplace',
+    // hideInMenu: true,
+  }],
+},
 // {
 //   name: '表单页',
 //   icon: 'form',
@@ -37,7 +45,8 @@ export const menuData = [{
 //     name: '高级表单',
 //     path: 'advanced-form',
 //   }],
-// }, {
+// },
+//  {
 //   name: '列表页',
 //   icon: 'table',
 //   path: 'list',
@@ -101,6 +110,7 @@ export const menuData = [{
   //   name: '异常页',
   //   icon: 'warning',
   //   path: 'exception',
+  //   hideInMenu: true,
   //   children: [{
   //     name: '403',
   //     path: '403',

@@ -102,7 +102,7 @@ export default class Index extends PureComponent {
           <div>
             {/* <a onClick={() => { this.showModalVisibel('update', record) }}>去处理</a>
            */}
-            <Link to="/profile/advanced" >
+            <Link to={`/assessment/assessment-detail/${record.ordernum}`} >
               去处理
               </Link>
           </div>

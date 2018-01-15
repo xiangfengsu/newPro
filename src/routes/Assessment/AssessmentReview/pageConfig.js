@@ -8,16 +8,24 @@ export const PageConfig = {
     dataIndex: 'id'
   }, {
     title: '订单号',
-    dataIndex: 'ordernum'
+    dataIndex: 'ordernum',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.ordernum - b.ordernum,
   }, {
     title: '评估人员',
-    dataIndex: 'assessmentname'
+    dataIndex: 'assessmentname',
+    // defaultSortOrder: 'descend',
+    // sorter: (a, b) => a.assessmentname.length - b.assessmentname.length,
   }, {
     title: '评估价格（元）',
-    dataIndex: 'assessmentprice'
+    dataIndex: 'assessmentprice',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => a.assessmentprice - b.assessmentprice,
   }, {
     title: '创建时间',
-    dataIndex: 'createtime'
+    dataIndex: 'createtime',
+    defaultSortOrder: 'descend',
+    sorter: (a, b) => new Date(a.createtime).getTime() - new Date(b.createtime).getTime(),
   }, {
     title: '状态',
     dataIndex: 'status',

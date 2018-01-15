@@ -8,10 +8,16 @@ import SearchForms from '../../components/GeneralSearchForm/Index';
 import TableList from '../../components/GeneralTableList/Index';
 import DetailFormInfo from './ModalDetailForm/Index';
 
+import RenderAuthorized from 'ant-design-pro/lib/Authorized';
 import { PageConfig } from './pageConfig.js';
 import { formaterObjectValue, formItemAddInitValue } from '../../utils/utils';
+
+
 const FormItem = Form.Item;
+const Authorized = RenderAuthorized();
+
 @connect(state => ({
+  currentUser: state.user.currentUser,
   channel: state.channel,
 }))
 @Form.create()
@@ -25,6 +31,7 @@ export default class Index extends PureComponent {
   }
   constructor(props) {
     super(props);
+
   }
   componentDidMount() {
     const { dispatch } = this.props;
@@ -164,7 +171,9 @@ export default class Index extends PureComponent {
   render() {
     const { modalVisible, detailFormItems } = this.state;
     const modalWidth = document.documentElement.clientWidth - 300;
-    const { form: { getFieldDecorator } } = this.props;
+    const { form: { getFieldDecorator }, currentUser: { btnAuth = [] } } = this.props;
+    // logs('btnAuth', btnAuth)
+    // logs('currentUser', currentUser);
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
@@ -172,9 +181,11 @@ export default class Index extends PureComponent {
             <div className={styles.tableListForm}>
               {this.renderSearchForm()}
               <div className={styles.tableListOperator}>
-                <Button icon="plus" type="primary" onClick={() => this.showModalVisibel('create', {})}>
-                  新建
-                                </Button>
+                <Authorized authority={() => ~btnAuth.indexOf('新建渠道')} >
+                  <Button icon="plus" type="primary" onClick={() => this.showModalVisibel('create', {})}>
+                    新建
+                 </Button>
+                </Authorized>
               </div>
               {this.renderTable()}
             </div>

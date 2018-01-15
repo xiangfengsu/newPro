@@ -1,10 +1,46 @@
-import { Form, Row, Input, InputNumber, Switch, Tooltip, Button, Select, Col, TimePicker, Upload, Icon, DatePicker, } from 'antd';
+import { Form, Input, InputNumber, Switch, Select, TimePicker, Upload, DatePicker } from 'antd';
 
 const FormItem = Form.Item;
 const MonthPicker = DatePicker.MonthPicker;
 const RangePicker = DatePicker.RangePicker;
 
-export const renderFormItem = (item, getFieldDecorator, dispatch) => {
+const validateNumber = (value, prevValue, allValues) => {
+  if (!value) {
+    return value
+  }
+  const reg = /^-?(0|[1-9][0-9]*)(\.[0-9]*)?$/;
+  if (reg.test(value) || value === '' || value === '-') {
+    return value;
+  } else {
+    return prevValue;
+  }
+}
+const validatePlusNumber = (value, prevValue, allValues) => {
+  if (!value) {
+    return value
+  }
+  const reg = /^\d+$/;
+  if ((!isNaN(value) && reg.test(value))) {
+    return value;
+  } else {
+    return prevValue;
+  }
+}
+const validateMoney = (value, prevValue, allValues) => {
+  if (!value) {
+    return value
+  }
+  const reg = /^\d+(\.\d{1,4})?$/;
+  logs('value', reg.test(value));
+  if (reg.test(value)) {
+    return value;
+  } else {
+    return prevValue;
+  }
+}
+
+export const renderFormItem = (item, form, dispatch) => {
+  const { getFieldDecorator, setFieldsValue } = form;
   let InputType = null;
   switch (item.formType) {
     case 'input':
@@ -12,49 +48,68 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
         initialValue: item.initialValue,
         rules: [{
           required: item.isRequired,
-          message: `${item.label}不能为空`
+          message: item.errorText || `${item.label}不能为空`
         }]
       })(
-        <Input disabled={item.disabled} type='text' placeholder={`请输入${item.placeholder}`} />
+        <Input
+          type='text'
+          disabled={item.disabled}
+          placeholder={item.placeholder ? item.placeholder : `请输入${item.label}`}
+        />
         )
       break;
     case 'inputNumber':
       InputType = getFieldDecorator(item.key, {
         initialValue: item.initialValue,
+        normalize: (value, prevValue, allValues) => { return validateNumber(value, prevValue, allValues) },
         rules: [{
           required: item.isRequired,
-          message: item.errorText,
-          pattern: item.pattern,
-          max: item.maxLen
+          message: `${item.label}不能为空`
         }]
       })(
-        <InputNumber disabled={item.disabled} placeholder={`请输入${item.placeholder}`} style={{ width: '100%' }} />
+        <InputNumber
+          style={{ width: '100%' }}
+          disabled={item.disabled}
+          placeholder={item.placeholder ? item.placeholder : `请输入${item.label}`}
+
+        />
         )
       break;
     case 'inputMoney':
       InputType = getFieldDecorator(item.key, {
         initialValue: item.initialValue,
+        normalize: (value, prevValue, allValues) => { return validateNumber(value, prevValue, allValues) },
         rules: [{
           required: item.isRequired,
-          message: item.errorText,
-          pattern: item.pattern,
-          max: item.maxLen
+          message: `${item.label}不能为空`,
+          // pattern: item.pattern,
+          // max: item.maxLen
         }]
       })(
-        <Input addonAfter="元" disabled={item.disabled} placeholder={`请输入${item.placeholder}`} style={{ width: '100%' }} />
+        <Input
+          style={{ width: '100%' }}
+          addonAfter="元"
+          disabled={item.disabled}
+          placeholder={item.placeholder ? item.placeholder : `请输入${item.label}`}
+        />
         )
       break;
     case 'inputPhone':
       InputType = getFieldDecorator(item.key, {
         initialValue: item.initialValue,
+        normalize: (value, prevValue, allValues) => { return validatePlusNumber(value, prevValue, allValues) },
         rules: [{
           required: item.isRequired,
-          message: item.errorText,
-          pattern: item.pattern,
-          max: item.maxLen
+          message: item.errorText || '手机号码格式不正确',
+          pattern: item.pattern || /^1[34578]\d{9}$/
         }]
       })(
-        <Input disabled={item.disabled} type='tel' maxLength="11" placeholder={`请输入${item.placeholder}`} />
+        <Input
+          type='tel'
+          maxLength="11"
+          disabled={item.disabled}
+          placeholder={item.placeholder ? item.placeholder : `请输入${item.label}`}
+        />
         )
       break;
     case 'textArea':
@@ -65,7 +120,13 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
           message: `${item.label}不能为空`
         }]
       })(
-        <Input.TextArea disabled={item.disabled} type='text' placeholder={`请输入${item.placeholder}`} autosize={item.autosize} />
+        <Input.TextArea
+          type='text'
+          autosize={item.autosize || { minRows: 5, maxRows: 10 }}
+          disabled={item.disabled}
+          placeholder={item.placeholder ? item.placeholder : `请输入${item.label}`}
+
+        />
         )
       break;
     case 'select':
@@ -77,17 +138,17 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
         }]
       })(
         <Select
-          placeholder={`请选择${item.placeholder}`}
+          placeholder={item.placeholder ? item.placeholder : `请选择${item.label}`}
           getPopupContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
         >
           {
             item.selectOptions.map((option, i) => {
               return (
                 <Select.Option
-                  key={`${option.value}_i`}
-                  value={option.value}
+                  key={`${option.key}_i`}
+                  value={option.key}
                 >
-                  {option.text}
+                  {option.value}
                 </Select.Option>)
             })
           }
@@ -97,7 +158,7 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
     case 'selectDynamic':
       const DynamicSelect = require('../components/DynamicSelect/Index');
       InputType = getFieldDecorator(item.key, {
-        initialValue: { selectValue: item.initialValue },
+        initialValue: item.initialValue,
         rules: [{
           required: item.isRequired,
           message: `${item.label}不能为空`
@@ -105,7 +166,7 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
       })(<DynamicSelect
         dispatch={dispatch}
         dictionaryKey={item.dictionaryKey}
-        placeholder={item.placeholder}
+        placeholder={item.placeholder ? item.placeholder : `请选择${item.label}`}
         fetchUrl={item.fetchUrl}
         popupContainer={item.popupContainer && document.getElementById(item.popupContainer) || document.body}
       />)
@@ -119,7 +180,7 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
         }]
       })(
         <Select
-          placeholder={`请选择${item.label}`}
+          placeholder={item.placeholder ? item.placeholder : `请选择${item.label}`}
           getPopupContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
         >
           {
@@ -130,10 +191,10 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
                     option.childrenOptions.map((v, j) => {
                       return (
                         <Select.Option
-                          value={v.value}
+                          value={v.key}
                           key={`${i}_${j}`}
                         >
-                          {v.text}
+                          {v.value}
                         </Select.Option>
                       )
                     })
@@ -143,6 +204,25 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
             })
           }
         </Select>
+        )
+      break;
+    case 'selectDynamicGroup':
+      const DynamicSelectGroup = require('../components/DynamicSelectGroup/Index');
+      InputType = getFieldDecorator(item.key, {
+        initialValue: item.initialValue,
+        rules: [{
+          required: item.isRequired,
+          message: `${item.label}不能为空`
+        }]
+      })(
+        <DynamicSelectGroup
+          dispatch={dispatch}
+          dictionaryKey={item.dictionaryKey}
+          placeholder={item.placeholder ? item.placeholder : `请选择${item.label}`}
+          fetchUrl={item.fetchUrl}
+          popupContainer={item.popupContainer && document.getElementById(item.popupContainer) || document.body}
+
+        />
         )
       break;
     case 'datePicker':
@@ -155,8 +235,10 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
         }]
       })(
         <DatePicker
+          showTime={item.showTime}
+          format={item.showTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD'}
           style={{ width: '100%' }}
-          placeholder={`${item.placeholder}`}
+          placeholder={item.placeholder || '请选择日期'}
           getCalendarContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
         />
         )
@@ -172,6 +254,8 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
       })(
         <RangePicker
           style={{ width: '100%' }}
+          showTime={item.showTime}
+          format={item.showTime ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD'}
           getCalendarContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
         />
         )
@@ -186,7 +270,23 @@ export const renderFormItem = (item, getFieldDecorator, dispatch) => {
         }]
       })(
         <MonthPicker
-          placeholder={`${item.placeholder}`}
+          placeholder={item.placeholder || '请选择月份'}
+          style={{ width: '100%' }}
+          getCalendarContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
+        />
+        )
+      break;
+    case 'timePicker':
+      InputType = getFieldDecorator(item.key, {
+        initialValue: item.initialValue,
+        rules: [{
+          type: 'object',
+          required: item.isRequired,
+          message: `${item.label}不能为空`
+        }]
+      })(
+        <TimePicker
+          placeholder={item.placeholder || '请选择月份'}
           style={{ width: '100%' }}
           getCalendarContainer={() => item.popupContainer && document.getElementById(item.popupContainer) || document.body}
         />

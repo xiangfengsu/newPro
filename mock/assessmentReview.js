@@ -30,7 +30,7 @@ if (!global.tableListSys_assessmentReviewData) {
       'assessmentname|1': '@cname()',
       'assessmentprice|60000-150000': 70000,
       'status|1': ['已评估', '已检测', '未评估'],
-      'createtime|1': '@datetime("2017-12-dd")',
+      'createtime|1': '@datetime("2017-12-dd HH:mm:ss")',
       'description|1': '@csentence'
 
 

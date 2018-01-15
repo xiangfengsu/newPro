@@ -59,9 +59,9 @@ export default class SearchForms extends React.PureComponent {
     handleFormReset();
   }
   renderFormItem = (formItems, count) => {
-    const { dispatch, form: { getFieldDecorator } } = this.props;
+    const { dispatch, form } = this.props;
     return formItems.map((item, i) => {
-      const InputType = renderFormItem(item, getFieldDecorator, dispatch);
+      const InputType = renderFormItem(item, form, dispatch);
       return (
         <Col md={8} sm={24} key={`${item.key}_${i}`} style={{ display: i < count ? 'block' : 'none' }} >
           <FormItem

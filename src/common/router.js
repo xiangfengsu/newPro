@@ -35,8 +35,14 @@ export const getRouterData = (app) => {
     '/': {
       component: dynamicWrapper(app, ['user', 'login'], () => import('../layouts/BasicLayout')),
     },
+    '/formItemType': {
+      component: dynamicWrapper(app, ['user', 'dictionary'], () => import('../routes/FormItemType/Index')),
+    },
     '/assessment/assessment-review': {
       component: dynamicWrapper(app, ['assessmentReview'], () => import('../routes/Assessment/AssessmentReview/Index')),
+    },
+    '/assessment/assessment-detail/:id': {
+      component: dynamicWrapper(app, ['assessmentReview'], () => import('../routes/Profile/AdvancedProfile')),
     },
     '/dashboard/analysis': {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),

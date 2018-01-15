@@ -10,17 +10,17 @@ import './index.less';
 
 const flag = true;
 if (window.console) {
-    window.logs = function (...props) {
-        if (flag) {
-            return console.log(...props);
-        }
+  window.logs = function (...props) {
+    if (flag) {
+      return console.log(...props);
     }
+  }
 }
 
 // 1. Initialize
 const app = dva({
-    // history: browserHistory(),
-    onError,
+  // history: browserHistory(),
+  onError,
 });
 
 // 2. Plugins

@@ -44,7 +44,6 @@ export default class DynamicSelect extends Component {
     this.triggerChange({ selectValue });
   }
   triggerChange = (changedValue) => {
-    // Should provide an event to pass value to Form.
     const onChange = this.props.onChange;
     if (onChange) {
       onChange(Object.assign({}, this.state, changedValue));
@@ -62,11 +61,22 @@ export default class DynamicSelect extends Component {
         getPopupContainer={() => popupContainer}
       >
         {
-          dictionary[dictionaryKey] && dictionary[dictionaryKey].map((v, i) => {
+          dictionary[dictionaryKey] && dictionary[dictionaryKey].map((option, i) => {
             return (
-              <Option value={v.key} key={`${v.key}_${i}`}>
-                {v.value}
-              </Option>
+              <Select.OptGroup label={option.label} key={`${i}_t`}>
+                {
+                  option.childrenOptions.map((v, j) => {
+                    return (
+                      <Option
+                        value={v.key}
+                        key={`${v.key}_${i}_${j}`}
+                      >
+                        {v.value}
+                      </Option>
+                    )
+                  })
+                }
+              </Select.OptGroup>
             )
           })
         }

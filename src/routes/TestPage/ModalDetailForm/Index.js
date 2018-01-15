@@ -22,11 +22,10 @@ export default class DetailFormInfo extends PureComponent {
     super(props);
   }
   renderFormItem1() {
-    const { formItems, dispatch, form: { getFieldDecorator } } = this.props;
-
+    const { formItems, dispatch, form } = this.props;
     return FormItems.map((cell) => {
       const items = cell.items.map((item) => {
-        const InputType = renderFormItem(item, getFieldDecorator, dispatch);
+        const InputType = renderFormItem(item, form, dispatch);
 
         return (
           <Col lg={item.colSpan || 8} md={12} sm={24} key={item.key} >
@@ -55,9 +54,9 @@ export default class DetailFormInfo extends PureComponent {
     });
   }
   renderFormItem = () => {
-    const { formItems, dispatch, form: { getFieldDecorator } } = this.props;
+    const { formItems, dispatch, form } = this.props;
     return formItems.map((item, i) => {
-      const InputType = renderFormItem(item, getFieldDecorator, dispatch);
+      const InputType = renderFormItem(item, form);
       return (
         <Col lg={item.colSpan || 8} md={12} sm={24} key={`${item.key}_${i}`} >
           <FormItem
@@ -75,7 +74,7 @@ export default class DetailFormInfo extends PureComponent {
       <Card bordered={false} loading={false}>
         <Form layout="vertical">
           <Row gutter={24}>
-            {this.renderFormItem1()}
+            {this.renderFormItem()}
           </Row>
         </Form>
       </Card>
